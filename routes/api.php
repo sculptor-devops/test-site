@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function (Request $request) {
+    $created = false;
+
     $filename = '/tmp/_app_test';
 
     $db = false;
@@ -28,6 +30,8 @@ Route::get('/test', function (Request $request) {
     }
 
     if (file_exists($filename)) {
+        $created = true;
+
         unlink($filename);
     }
 
@@ -38,6 +42,6 @@ Route::get('/test', function (Request $request) {
     return response()->json([
         'version' => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION,
         'database' => $db,
-        'queue' => file_exists($filename) && env('QUEUE_CONNECTION') != 'sync'
+        'queue' => $created && env('QUEUE_CONNECTION') != 'sync'
     ]);
 });
