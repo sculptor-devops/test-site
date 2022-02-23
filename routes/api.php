@@ -27,7 +27,9 @@ Route::get('/test', function (Request $request) {
         report($ex);
     }
 
-    unlink($filename);
+    if (file_exists($filename)) {
+        unlink($filename);
+    }
 
     dispatch(new TestFile($filename));
 
