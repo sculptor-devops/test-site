@@ -17,9 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function (Request $request) {
+    $version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
+
     $created = false;
 
-    $filename = '/tmp/_app_test';
+    $filename = "/tmp/_app_test_$version";
 
     $db = false;
 
@@ -40,7 +42,7 @@ Route::get('/test', function (Request $request) {
     sleep(3);
 
     return response()->json([
-        'version' => PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION,
+        'version' => $version,
         'database' => $db,
         'queue' => $created && env('QUEUE_CONNECTION') != 'sync'
     ]);
