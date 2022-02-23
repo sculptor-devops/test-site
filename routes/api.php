@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/test', function (Request $request) {
+    $tag = "user " . time();
+
     $version = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
 
     $created = false;
@@ -27,7 +29,7 @@ Route::get('/test', function (Request $request) {
     $db = false;
 
     try {
-        $db = User::create(['name' =>'test', 'email' => 'user@example.org', 'password' => Hash::make('some-password')]) != null;
+        $db = User::create(['name' =>"test $tag", 'email' => "$tag@example.org", 'password' => Hash::make('some-password')]) != null;
     } catch (Exception $ex) {
         report($ex);
     }
