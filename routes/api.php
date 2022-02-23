@@ -3,6 +3,7 @@
 use App\Jobs\TestFile;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +27,7 @@ Route::get('/test', function (Request $request) {
     $db = false;
 
     try {
-        $db = User::create(['name' =>'test', 'email' => 'user@example.org']) != null;
+        $db = User::create(['name' =>'test', 'email' => 'user@example.org', 'password' => Hash::make('some-password')]) != null;
     } catch (Exception $ex) {
         report($ex);
     }
